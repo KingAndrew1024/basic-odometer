@@ -1,0 +1,23 @@
+{
+  "name": "basic-odometer",
+  "version": "1.0.0",
+  "description": "A simple odometer widget in HTML, JavaScript and CSS.",
+  "main": "example/index.html",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "browser-sync --startPath example/index.html start --port 5555 --server  --files '**/*.html, **/js/**/*.js, **/style/**/*.css'"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/KingAndrew1024/basic-odometer.git"
+  },
+  "author": "Andres Vergara (vbandrew@gmail.com) @ HCL TECHNOLOGIES (https://www.hcltech.com)",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/KingAndrew1024/basic-odometer.git"
+  },
+  "homepage": "https://github.com/KingAndrew1024/basic-odometer.git#readme",
+  "dependencies": {
+    "browser-sync": "^2.29.1"
+  }
+}

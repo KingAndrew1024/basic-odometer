@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>Simpler Odometer</title>
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+
+    <!-- <script src="../src/simpler-odometer.js"></script> -->
+    <script src="../src/Odometer.js"></script>
+    <link rel="stylesheet" type="text/css" href="../src/odometer.css" />
+    <link rel="stylesheet" type="text/css" href="./odometer-theme.css" />
+    <link rel="stylesheet" type="text/css" href="index.css" />
+  </head>
+
+  <body>
+    <div class="container">
+      <h3>DYNAMIC ODOMETER</h3>
+      <div class="control-set">
+        <div class="left-col">
+          <div class="control flex-column flex-centered">
+            <div>SET / ADD VALUE</div>
+            <input
+              id="inputval"
+              type="number"
+              style="width: 100px"
+              placeholder="123, -0.98, etc"
+            />
+            <div>
+              <button id="setValueBtn" class="button" onclick="setValue()">
+                SET
+              </button>
+              <button id="addValueBtn" class="button" onclick="addValue()">
+                ADD
+              </button>
+            </div>
+          </div>
+          <div class="control flex-column flex-centered">
+            <div>ADD RANDOM IN LOOP</div>
+            <div class="value-type">
+              <div>
+                <input
+                  type="radio"
+                  name="add-sign"
+                  id="randomPositiveRadio"
+                  checked
+                />
+                <label for="randomPositiveRadio">Integer</label>
+              </div>
+              <div>
+                <input type="radio" name="add-sign" id="randomNegativeRadio" />
+                <label for="randomNegativeRadio">Float</label>
+              </div>
+            </div>
+            <div>
+              <button id="playLoop" class="button" onclick="toggleInterval()">
+                START LOOP
+              </button>
+            </div>
+          </div>
+        </div>
+        <div class="right-col">
+          <div class="bottom-controls">
+            <div id="currency-symbol-control" class="control">
+              <div>
+                <span id="currency-symbol"></span> (currency ) position:
+              </div>
+              <label for="currency-start">Start</label>
+              <input
+                id="currency-start"
+                type="radio"
+                name="currency-position"
+                value="start"
+                onchange="updateCurrencyPosition('start')"
+              />
+              <label for="currency-end">End</label>
+              <input
+                id="currency-end"
+                type="radio"
+                name="currency-position"
+                value="end"
+                onchange="updateCurrencyPosition('end')"
+              />
+            </div>
+            <div class="control decimals-control">
+              <select
+                name="decimalMark"
+                id="decimalMark"
+                onchange="updateDecimalSymbol(event)"
+              >
+                <option value=",">comma(,)</option>
+                <option value="." selected>point(.)</option>
+              </select>
+              Decimal Radix Mark
+            </div>
+            <div class="control decimals-control">
+              <label for="minDecimalsLength">
+                Min decimals (
+                <span style="text-decoration: underline">trailing</span>
+                zeros) </label
+              ><br />
+              <input
+                type="range"
+                min="0"
+                max="6"
+                id="minDecimalsLength"
+                class="slider"
+                list="decimalValues"
+                onchange="minDecimalsLength(event)"
+              />
+              <datalist id="decimalValues">
+                <option value="0" label="0"></option>
+                <option value="1" label="1"></option>
+                <option value="2" label="2"></option>
+                <option value="3" label="3"></option>
+                <option value="4" label="4"></option>
+                <option value="5" label="5"></option>
+                <option value="6" label="6"></option>
+              </datalist>
+            </div>
+            <div class="control thousands-control">
+              <select
+                name="radixMark"
+                id="radixMark"
+                onchange="updateRadixSeparator(event)"
+              >
+                <option value="">none()</option>
+                <option value=" ">space( )</option>
+                <option value="," selected>comma(,)</option>
+                <option value=".">point(.)</option>
+                <option value="'">quote(')</option>
+                <option value="˙">symbol(˙)</option>
+              </select>
+              Separator Radix Mark
+            </div>
+            <div class="control">
+              <label for="minIntegersLength">
+                <span class="total-length-color">Min integers length</span>
+                (<span style="text-decoration: underline">leading</span>
+                zeros) </label
+              ><br />
+              <input
+                type="range"
+                min="1"
+                max="12"
+                id="minIntegersLength"
+                class="slider"
+                list="leading-zeros"
+                onchange="minIntegersLength(event)"
+              />
+              <datalist id="leading-zeros" class="total-length-color">
+                <option value="1" label="&nbsp;1"></option>
+                <option value="2" label="&nbsp;2"></option>
+                <option value="3" label="&nbsp;3"></option>
+                <option value="4" label="&nbsp;4"></option>
+                <option value="5" label="&nbsp;5"></option>
+                <option value="6" label="&nbsp;6"></option>
+                <option value="7" label="&nbsp;7"></option>
+                <option value="8" label="&nbsp;8"></option>
+                <option value="9" label="&nbsp;9"></option>
+                <option value="10" label="10"></option>
+                <option value="11" label="11"></option>
+                <option value="12" label="12"></option>
+              </datalist>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div id="odometer"></div>
+
+      <h5>OTHER STATIC ODOMETERS</h5>
+      <div style="display: flex; margin-bottom: 8px">
+        Create&nbsp;
+        <select onchange="createOdometers(event.target.value)">
+          <option value="0">0</option>
+          <option value="1">1</option>
+          <option value="2">2</option>
+          <option value="3">3</option>
+          <option value="4">4</option>
+          <option value="5">5</option>
+        </select>
+      </div>
+
+      <div class="other-odos"></div>
+    </div>
+
+    <script src="index.js"></script>
+  </body>
+</html>

@@ -1,0 +1,24 @@
+.odometer {
+  justify-content: center;
+  background: rgb(83, 79, 132);
+  border: 2px solid white;
+  border-radius: 6px;
+  color: white;
+  padding: 4px;
+  font-family:'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+  --odo-font-size: 2rem;
+  /* --odo-align-items: flex-end; */
+  /* --odo-reel-height: 40px; */
+  /* width: 500px; */
+}
+.reel {
+  background-color: black;
+  border: 2px solid white;
+  border-radius: 4px;
+  margin: 0 2px;
+  padding: 0 2px;
+  width: 24px;
+}
+.currency {
+  font-size: calc(var(--odo-font-size) * .75);
+}

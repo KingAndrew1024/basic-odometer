@@ -1,0 +1,114 @@
+:root {
+  background-color: black;
+  color: white;
+  font-size: 1em;
+  font-family: Roboto Light;
+}
+
+body,
+html {
+  margin: 0;
+  height: 100%;
+  font-size: 1em;
+  font-family: sans-serif;
+}
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 2%;
+}
+.control-set {
+  display: flex;
+  margin-bottom: 10px;
+}
+.control-set > div:first-child {
+  margin-right: 10px;
+  padding-right: 10px;
+  border-right: 1px solid white;
+}
+
+.control {
+  margin-top: 16px;
+}
+.flex-column {
+  flex-direction: column;
+}
+.flex-centered {
+  display: flex;
+  align-items: center;
+}
+.value-type div {
+  display: flex;
+  align-items: center;
+}
+
+input {
+  height: 24px;
+  border: 0;
+}
+input[type='text'] {
+  padding: 0;
+}
+input[type='number'] {
+  margin-bottom: 8px;
+}
+.control select {
+  font-size: 18px;
+}
+.button {
+  background: linear-gradient(greenyellow, #32cdd4);
+}
+button:disabled {
+  opacity: 0.5;
+}
+
+#playLoop {
+  color: black;
+}
+
+#playLoop.active {
+  background: red;
+  color: white;
+}
+
+.bottom-controls input[type='text'] {
+  width: 40px;
+  text-align: center;
+  font-size: 1em;
+  font-weight: bold;
+  padding-bottom: 6px;
+}
+.bottom-controls input[type='radio'] {
+  width: 20px;
+  height: 20px;
+}
+
+.thousands-control {
+  color: #ff0000;
+}
+.decimal-text,
+.decimals-control {
+  color: rgb(47, 245, 255);
+}
+.total-length-color {
+  color: #ffc600;
+}
+datalist {
+  display: flex;
+  justify-content: space-between;
+  width: 310px;
+}
+option {
+  padding: 0;
+  margin-right: 2px;
+}
+
+input.slider {
+  width: 300px;
+  height: 15px;
+  outline: none;
+}
+.other-odos {
+  text-align: center;
+}
