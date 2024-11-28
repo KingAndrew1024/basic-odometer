@@ -169,7 +169,7 @@ function addRandom(addFloatNumber = false) {
     toVal = (inc + +fromVal).toFixed(odoConfig.minDecimalsLength);
   }
 
-  updateWrapper(toVal);
+  odo.set(toVal);
 }
 
 function addValue() {
@@ -186,7 +186,7 @@ function addValue() {
 
   toVal = toVal.toFixed(odoConfig.minDecimalsLength);
 
-  updateWrapper(toVal);
+  odo.set(toVal);
 }
 
 function setValue() {
@@ -196,7 +196,7 @@ function setValue() {
     return;
   }
 
-  updateWrapper(parseInt(targetVal).toFixed(odoConfig.minDecimalsLength));
+  odo.set(parseInt(targetVal).toFixed(odoConfig.minDecimalsLength));
 }
 const markWidth = getComputedStyle(document.documentElement).getPropertyValue(
   '--mark-width'
@@ -228,9 +228,4 @@ function minDecimalsLength(evt) {
 
 function updateCurrencyPosition(position) {
   odo.setCurrencyPosition(position);
-}
-
-function updateWrapper(val) {
-  //console.clear();
-  odo.set(val);
 }
