@@ -14,8 +14,8 @@
 -   Include a refernece to `` css
 
 ```html
-<script src="./src/simpler-odometer.js"></
-<link rel="stylesheet" type="text/css" href="src/simpler-odometer.css" />
+<script src="./src/Odometer.js"></
+<link rel="stylesheet" type="text/css" href="src/odometer.css" />
 ```
 
 -   Create a configuration object:
@@ -45,7 +45,7 @@ const elementTag = document.getElementById('#identifier');
 -   Create an instance of Odometer and pass in your configuration object
 
 ```js
-const odo = Odometer(elementTag, odoConfig).create();
+const odo = new Odometer(elementTag, odoConfig);
 ```
 
 -   Use the update() method to update the widget
@@ -53,7 +53,7 @@ const odo = Odometer(elementTag, odoConfig).create();
 ```js
 const someNewValue = 1234.565;
 
-odo.update(someNewValue);
+odo.set(someNewValue);
 
 // Also you can retrieve the current value to add it other amount:
 // const prevValue = odo.getCurrentValue();
