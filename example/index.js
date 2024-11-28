@@ -1,28 +1,27 @@
 // Element to render the ODOMETER
-const elementTag = document.getElementById('odometer');
+const myElementTag = document.getElementById('odometer');
 const currencies = ['$', '€', '¥', '£'];
 
 // Odometer config params
 const odoConfig = {
-  initValue: 123.45,
-  // radixMark supported values: ['', ' ', ',', '.', '\'', '˙']
+  initValue: 123,
+  // radixMark supported values: ['', ',', "'", '˙', '.', ' ']
   // see https://docs.oracle.com/cd/E19455-01/806-0169/overview-9/index.html
   // and http://www.linguafin.com/index.php?p=thousand+separators+and+decimals
   radixMark: ',',
-  decimalMark: '.',
+  /* decimalMark: '.', */
   currencySymbol: currencies[0],
   /* currencyPosition: 'end', */
-  commafyLeadingZeros: false,
-  minIntegersLength: 5,
+  commafyLeadingZeros: true,
+  minIntegersLength: 6,
   minDecimalsLength: 2,
-  animationDurationInMs: 2500,
+  /* animationDurationInMs: 2500, */
 };
 
 const odoConfig2 = Object.assign({}, odoConfig);
 
 // Initialization of Odometer
-const odo = new Odometer(elementTag, odoConfig);
-
+const odo = new Odometer(myElementTag, odoConfig);
 
 /* const el = document.getElementById('odometer');
 const odo = new Odometer(el, { initValue: 12340 });
@@ -42,11 +41,11 @@ setTimeout(() => {
   }
   document.querySelector('#currency-symbol').textContent =
     odoConfig.currencySymbol;
-  /* if (odoConfig.currencyPosition.toLowerCase() === 'end') {
+  if ((odoConfig.currencyPosition || '').toLowerCase() === 'end') {
     document.querySelector('#currency-end').setAttribute('checked', 'true');
   } else {
     document.querySelector('#currency-start').setAttribute('checked', 'true');
-  } */
+  }
 })();
 
 let intervalIdList = [];
@@ -83,7 +82,7 @@ function generateOdometers(num = 1) {
         ).toFixed(i);
 
         odox.set(value);
-      }, odoConfig2.animationDurationInMs + 500);
+      }, (odoConfig2.animationDurationInMs || odox.getCurrentOptions().animationDurationInMs) + 500);
     }, generateRandomNumber(999));
   }
 
@@ -136,7 +135,7 @@ function toggleInterval() {
   addRandom(isFloat);
   intervalRef = setInterval(() => {
     addRandom(isFloat);
-  }, odoConfig.animationDurationInMs + 500 /* numbers animation lasts 2000ms, so set this timeout greater */);
+  }, (odoConfig.animationDurationInMs || odo.getCurrentOptions().animationDurationInMs) + 500 /* numbers animation lasts 2000ms, so set this timeout greater */);
 }
 
 function toggleDisableControls(disable) {
