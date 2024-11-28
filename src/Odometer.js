@@ -1,23 +1,20 @@
 class Odometer {
   constructor(element, userOptions = {}) {
-    // radixMark supported values: ['', ' ', ',', '.', '\'', '˙']
+    // radixMark supported values: ['', ',', "'", '˙', '.', ' ']
     // see https://docs.oracle.com/cd/E19455-01/806-0169/overview-9/index.html
     // and http://www.linguafin.com/index.php?p=thousand+separators+and+decimals
-    this.supportedRadixMarks = ['', ' ', ',', '.', "'", '˙'];
-    this.defaultRadixMark = ',';
+    this._supportedRadixMarks = ['', ',', "'", '˙', '.', ' '];
 
-    this.supportedDecimalMarks = [',', '.'];
-    this.defaultDecimalMark = '.';
-
-    this.posibleCurrencyPosition = ['start', 'end'];
-    this.defaultCurrencyPosition = 'start';
-
-    this.config = {
-      initValue: '0',
-      radixMark: this.defaultRadixMark,
-      decimalMark: this.defaultDecimalMark,
+    this._supportedDecimalMarks = ['.', ','];
+    
+    this._supportedCurrencyPositions = ['start', 'end'];
+    
+    this._defaultConfig = {
+      initValue: 0,
+      radixMark: this._supportedRadixMarks[0],
+      decimalMark: this._supportedDecimalMarks[0],
       currencySymbol: '',
-      currencyPosition: this.defaultCurrencyPosition,
+      currencyPosition: this._supportedCurrencyPositions[0],
       commafyLeadingZeros: false, // commafies strings like: 000000.01 to 000,000.01
       minIntegersLength: 1,
       minDecimalsLength: 0,
@@ -25,8 +22,8 @@ class Odometer {
       animateFunction: this.easeOutQuad,
     };
 
+    this.config = {};
     this.currentValue = '';
-
     this.animationStartTime = undefined;
     this.currentReelPositions = [];
 
@@ -94,14 +91,14 @@ class Odometer {
   setRadixMark(character = '') {
     //make sure we use a single character
     character = character.charAt(0);
-    this.config.radixMark = this.supportedRadixMarks.includes(character)
+    this.config.radixMark = this._supportedRadixMarks.includes(character)
       ? character
-      : this.defaultRadixMark;
+      : this._defaultConfig.radixMark;
 
-    const elements = elementTag.querySelectorAll('.radix-mark');
+    const elements = this.element.querySelectorAll('.radix-mark');
 
     [].forEach.call(elements, (e) => {
-      e.firstChild.firstChild.nextSibling.textContent = character;
+      e.firstChild.textContent = character;
     });
   }
   /**
@@ -110,14 +107,14 @@ class Odometer {
   setDecimalMark(character = '.') {
     //make sure we use a single character
     character = character.charAt(0);
-    this.config.decimalMark = this.supportedDecimalMarks.includes(character)
+    this.config.decimalMark = this._supportedDecimalMarks.includes(character)
       ? character
-      : this.defaultDecimalMark;
+      : this._defaultConfig.decimalMark;
 
-    const element = elementTag.querySelector('.decimal-mark');
+    const element = this.element.querySelector('.decimal-mark');
 
     if (element) {
-      element.firstChild.firstChild.nextSibling.textContent = character;
+      element.firstChild.textContent = character;
     }
   }
 
@@ -139,14 +136,14 @@ class Odometer {
    */
   setCurrencyPosition(position = 'start') {
     position = position.toLocaleLowerCase();
-    this.currencyPosition = this.posibleCurrencyPosition.includes(position)
+    this.currencyPosition = this._supportedCurrencyPositions.includes(position)
       ? position
-      : this.defaultCurrencyPosition;
+      : this._defaultConfig.currencyPosition;
 
     if (this.currencyPosition === 'end') {
-      elementTag.classList.add('currency-end');
+      this.element.classList.add('currency-end');
     } else {
-      elementTag.classList.remove('currency-end');
+      this.element.classList.remove('currency-end');
     }
   }
 
@@ -167,22 +164,32 @@ class Odometer {
   validateRadixMarks(options) {
     const style = "style='color: black !important;'";
 
-    if (!this.supportedRadixMarks.includes(options.radixMark)) {
+    if (
+      options.radixMark &&
+      !this._supportedRadixMarks.includes(options.radixMark)
+    ) {
       const error = `Unsupported radixMark: '${options.radixMark}'`;
-      elementTag.innerHTML = `<div ${style}>${error}</div>`;
-      elementTag.classList.add('odo-error');
+      this.element.innerHTML = `<div ${style}>${error}</div>`;
+      this.element.classList.add('odo-error');
       throw Error(error);
     }
-    if (!this.supportedDecimalMarks.includes(options.decimalMark)) {
+    if (
+      options.decimalMark &&
+      !this._supportedDecimalMarks.includes(options.decimalMark)
+    ) {
       const error = `Unsupported decimalMark: '${options.decimalMark}'`;
-      elementTag.innerHTML = `<div ${style}>${error}</div>`;
-      elementTag.classList.add('odo-error');
+      this.element.innerHTML = `<div ${style}>${error}</div>`;
+      this.element.classList.add('odo-error');
       throw Error(error);
     }
-    if (options.radixMark === options.decimalMark) {
+    if (
+      options.radixMark &&
+      options.decimalMark &&
+      options.radixMark === options.decimalMark
+    ) {
       const error = 'Error: radixMark and decimalMark are equal';
-      elementTag.innerHTML = `<div ${style}>${error}</div>`;
-      elementTag.classList.add('odo-error');
+      this.element.innerHTML = `<div ${style}>${error}</div>`;
+      this.element.classList.add('odo-error');
       throw Error(error);
     }
   }
@@ -264,14 +271,14 @@ class Odometer {
   }
 
   /**
-   * @param {HTMLElement} elementTag
+   * @param {HTMLElement} element
    * @param {Object} fromValueObj
    * @param {Object} toValueObj
    * @returns {Array} of Reel instances
    * @description builds the reels and returns an array of Reel instances
    */
-  buildReels(elementTag, { fromValueObj, toValueObj }) {
-    elementTag.innerHTML = '';
+  buildReels(element, { fromValueObj, toValueObj }) {
+    element.innerHTML = '';
 
     if (this.config.currencySymbol) {
       /* currency symbol must be outside digits list so that it can be
@@ -280,12 +287,12 @@ class Odometer {
       const currencyWrapper = document.createElement('div');
       currencyWrapper.classList.add('currency');
       currencyWrapper.textContent = this.config.currencySymbol;
-      elementTag.appendChild(currencyWrapper);
+      element.appendChild(currencyWrapper);
 
       if (this.config.currencyPosition === 'end') {
-        elementTag.classList.add('currency-end');
+        element.classList.add('currency-end');
       } else {
-        elementTag.classList.remove('currency-end');
+        element.classList.remove('currency-end');
       }
     }
 
@@ -293,7 +300,7 @@ class Odometer {
       const signWrapper = document.createElement('div');
       signWrapper.classList.add('number-sign');
       signWrapper.textContent = '-';
-      elementTag.appendChild(signWrapper);
+      element.appendChild(signWrapper);
     }
 
     const isDecreasing = toValueObj.value < fromValueObj.value;
@@ -303,7 +310,7 @@ class Odometer {
     if (isDecreasing) {
       reelsWrapper.classList.add('reversed');
     }
-    elementTag.appendChild(reelsWrapper);
+    element.appendChild(reelsWrapper);
 
     const reelArray = [];
 
@@ -444,7 +451,7 @@ class Odometer {
       intPartCleanedLen--;
     }
 
-    const radixMarks = elementTag.querySelectorAll('.radix-mark');
+    const radixMarks = this.element.querySelectorAll('.radix-mark');
     let radixMarksLen = radixMarks.length;
     if (radixMarksLen) {
       let firstRadixPosition = 3 * radixMarksLen + 1;
@@ -501,32 +508,33 @@ class Odometer {
     //const options = Object.assign(this.defaultOptions, userOptions);
 
     // normalize, validate or set default values (if needed)
-    this.config.radixMark = this.supportedRadixMarks.includes(
+    this.config.radixMark = this._supportedRadixMarks.includes(
       userOptions.radixMark
     )
       ? userOptions.radixMark
-      : this.defaultRadixMark;
-    this.config.decimalMark = this.supportedDecimalMarks.includes(
+      : this._defaultConfig.radixMark;
+    this.config.decimalMark = this._supportedDecimalMarks.includes(
       userOptions.decimalMark
     )
       ? userOptions.decimalMark
-      : this.defaultDecimalMark;
+      : this._defaultConfig.decimalMark;
 
     this.config.currencySymbol = userOptions.currencySymbol;
-    this.config.currencyPosition = this.posibleCurrencyPosition.includes(
+    this.config.currencyPosition = this._supportedCurrencyPositions.includes(
       (userOptions.currencyPosition || '').toLowerCase()
     )
       ? userOptions.currencyPosition
-      : this.defaultCurrencyPosition;
+      : this._defaultConfig.currencyPosition;
 
     this.config.commafyLeadingZeros =
-      userOptions.commafyLeadingZeros || this.config.commafyLeadingZeros;
+      userOptions.commafyLeadingZeros || this._defaultConfig.commafyLeadingZeros;
     this.config.minIntegersLength =
       +userOptions.minIntegersLength > 0 ? +userOptions.minIntegersLength : 1;
     this.config.minDecimalsLength =
       +userOptions.minDecimalsLength > -1 ? +userOptions.minDecimalsLength : 0;
     this.config.animationDurationInMs =
-      userOptions.animationDurationInMs || this.config.animationDurationInMs;
+      userOptions.animationDurationInMs ||
+      this._defaultConfig.animationDurationInMs;
     this.config.animateFunction =
       typeof userOptions.animateFunction === 'function'
         ? userOptions.animateFunction
@@ -589,14 +597,13 @@ class Reel {
         char = '&nbsp;';
       }
 
-      if(char.toString().match(/[0-9]/)){
+      if (char.toString().match(/[0-9]/)) {
         this.reel.innerHTML += `
           <div class="digit">
             ${char}
           </div>
         `;
-      }
-      else {
+      } else {
         this.reel.classList.add('mark');
         this.reel.innerHTML = char;
       }
@@ -694,6 +701,7 @@ class Value {
       this.integerDigits,
       value2.integerDigits
     );
+
     normalValue1Integer = zeroPadding(
       normalValue1Integer,
       config.minIntegersLength
@@ -702,7 +710,13 @@ class Value {
       normalValue2Integer,
       config.minIntegersLength
     );
-    if (config.radixMark || config.commafyLeadingZeros) {
+
+    const shouldBeCommafied =
+      commafyString(value2.integerDigits, config.radixMark).indexOf(
+        config.radixMark
+      ) != -1;
+
+    if (config.commafyLeadingZeros || shouldBeCommafied) {
       normalValue1Integer = commafyString(
         normalValue1Integer,
         config.radixMark
