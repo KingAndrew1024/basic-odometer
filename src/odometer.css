@@ -22,7 +22,7 @@
   height: var(--odo-reel-height, var(--odo-font-size, 1rem));
 }
 
-.remaining-reel {
+.reel.remaining-reel {
   width: 0;
   padding: 0;
 }
