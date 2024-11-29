@@ -21,10 +21,10 @@ const odoConfig = {
 const odoConfig2 = Object.assign({}, odoConfig);
 
 // Initialization of Odometer
-const odo = new Odometer(myElementTag, odoConfig);
+const odo = Odometer(myElementTag, odoConfig);
 
 /* const el = document.getElementById('odometer');
-const odo = new Odometer(el, { initValue: 12340 });
+const odo = Odometer(el, { initValue: 12340 });
 setTimeout(() => {
   odo.set(-123.45);
 }, 3000); */
@@ -63,7 +63,7 @@ function generateOdometers(num = 1) {
     odoConfig2.currencySymbol = currencies[i % 4];
     odoConfig2.currencyPosition = i % 2 == 0 ? 'start' : 'end';
     odoConfig2.minDecimalsLength = i;
-    const odox = new Odometer(o, odoConfig2);
+    const odox = Odometer(o, odoConfig2);
     setTimeout(() => {
       let sign = Math.ceil(generateRandomNumber(2)) % 2 == 0 ? -1 : 1;
 
