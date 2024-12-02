@@ -2,7 +2,7 @@
   "name": "basic-odometer",
   "version": "1.0.0",
   "description": "A simple odometer widget in HTML, JavaScript and CSS.",
-  "main": "example/index.html",
+  "main": "docs/example/index.html",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "browser-sync --startPath example/index.html start --port 5555 --server  --files '**/*.html, **/js/**/*.js, **/style/**/*.css'"
