@@ -7,6 +7,10 @@
 -   Configurable leading/trailing zeros
 -   Commafy strings like 000000.01 to 000,000.01
 
+## LIVE EXAMPLE
+
+VISIT (https://kingandrew1024.github.io/basic-odometer/)[https://kingandrew1024.github.io/basic-odometer/]
+
 ## USAGE
 
 -   Copy the src folder (or its content) into your project
