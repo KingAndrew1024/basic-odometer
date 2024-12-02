@@ -9,7 +9,7 @@
 
 ## LIVE EXAMPLE
 
-VISIT (https://kingandrew1024.github.io/basic-odometer/)[https://kingandrew1024.github.io/basic-odometer/]
+VISIT [https://kingandrew1024.github.io/basic-odometer/](https://kingandrew1024.github.io/basic-odometer/)
 
 ## USAGE
 
