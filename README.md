@@ -15,11 +15,11 @@ VISIT [https://kingandrew1024.github.io/basic-odometer/](https://kingandrew1024.
 
 -   Copy the src folder (or its content) into your project
 -   Include a reference to `Odometer.js`
--   Include a refernece to `` css
+-   Include a refernece to `odometer.css`
 
 ```html
-<script src="./src/Odometer.js"></
-<link rel="stylesheet" type="text/css" href="src/odometer.css" />
+<script src="./src/Odometer.js"></script>
+<link rel="stylesheet" type="text/css" href="./src/odometer.css" />
 ```
 
 -   Create a configuration object:
@@ -73,25 +73,25 @@ odo.set(someNewValue);
 
 ```js
 //updates the currency position:
-odo.setCurrencyPosition;
+odo.setCurrencyPosition(string);
 //eg.: odo.setCurrencyPosition('start') // posible values: 'start', 'end'
 
 //updates the radix separator (thousands, millions, ...) mark:
-odo.setSeparatorRadixMark;
+odo.setSeparatorRadixMark(string);
 //eg.: odo.setSeparatorRadixMark(',')
 
 //updates the decimal radix mark:
-odo.setDecimalRadixMark;
+odo.setDecimalRadixMark(string);
 //eg.: odo.setDecimalRadixMark('.')
 
 // Adds leading zeros to the number
 // when the number length ( = [decimal part with trailing zeros] + [integer parts])
 // is less than the value set
-odo.setLeadingZerosLenght;
+odo.setLeadingZerosLenght(number);
 //eg.: odo.leadingZerosLenght(6);
 
 //updates the trailing zeros amount:
-odo.setTrailingZerosLenght;
+odo.setTrailingZerosLenght(number);
 //eg.: odo.setTrailingZerosLenght(3)
 ```
 
